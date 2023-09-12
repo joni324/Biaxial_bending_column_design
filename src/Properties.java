@@ -43,18 +43,18 @@ public class Properties {
         }
         return Ixx/(12);
     }
-    public static double[] steelProperties(double[][] coords){
+    public static double[] steelProperties(double[][] coords, double[] rebarArea){
         double area = 0;
         double xc = 0;
         double yc = 0;
         double Ixx = 0;
         double Iyy = 0;
-        for (double[] i: coords){
-            area += i[2];
-            xc += i[0]*i[2];
-            yc += i[1]*i[2];
-            Ixx += i[1]*i[1]*i[2];
-            Iyy = i[0]*i[0]*i[2];
+        for (int i = 0; i < coords.length; i++){
+            area += rebarArea[i];
+            xc += coords[i][0]*rebarArea[i];
+            yc += coords[i][1]*rebarArea[i];
+            Ixx += coords[i][1]*coords[i][1]*rebarArea[i];
+            Iyy = coords[i][0]*coords[i][0]*rebarArea[i];
         }
         return new double[] {area, xc/area, yc/area, Ixx, Iyy };
 

@@ -1,4 +1,4 @@
-public class Column {
+public class ColumnProperties {
     private double E = 0;//ksi
     private double area = 0;//in^2
     private double xc = 0;//in
@@ -8,7 +8,6 @@ public class Column {
     private double Ixx = 0;//in^4
     private double Iyy = 0;//in^4
     private double Ixy = 0;//in^4
-
     public void setArea(double area){
         this.area = area;
     }

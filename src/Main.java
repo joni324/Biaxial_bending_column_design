@@ -8,10 +8,15 @@ public class Main {
 
     public static void main(String[] args) {
         Concrete concrete = new Concrete();
-        double[][] coords = {{1,1},{0,0},{1,-1},{2,0},{1,1}};
-        concrete.setCoords(coords);
-        printC(concrete.getCoords());
-        printC(Transform.ReduceSection(Transform.TranslateCoords(0,.2,concrete.getCoords())));
-        printC(concrete.getCoords());
+        double[][] coords = {{0,0},{1,-1},{2,0},{1,1},{0,0}};
+        concrete.setCoordinates(coords);
+        concrete.updateProperties();
+        System.out.println(concrete.getArea());
+        concrete.Translate(-1,0);
+        concrete.Rotate(Math.PI/4);
+        printC(concrete.getCoordinates());
+        concrete.ReduceSection();
+        printC(concrete.getCoordinates());
+        System.out.println(concrete.getArea());
     }
 }

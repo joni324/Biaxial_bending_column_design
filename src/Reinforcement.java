@@ -1,18 +1,17 @@
-public class Reinforcement extends Column{
-
+public class Reinforcement extends ColumnGeometry {
     Reinforcement(){
         super.setE(29000);//default E to 29000ksi
     }
-    private double[][] coords; //(x,y, area )
-
-    public void setCoords(double [][] coords){
-        this.coords = coords; // (x,y,Area)
-        double[] properties = Properties.steelProperties(coords);
-        super.setArea(properties[0]);
-        super.setXc(properties[1]);
-        super.setYc(properties[2]);
-        super.setIxx(properties[3]);
-        super.setIyy(properties[4]);
+    double[] rebarArea;
+    public void setRebarArea(double[] rebar) {
+        rebarArea = rebar;
     }
-
+    public void updateProperties(){
+        double[] properties = Properties.steelProperties(this.getCoordinates(),this.rebarArea);
+        this.setArea(properties[0]);
+        this.setXc(properties[1]);
+        this.setYc(properties[2]);
+        this.setIxx(properties[3]);
+        this.setIyy(properties[4]);
+    }
 }

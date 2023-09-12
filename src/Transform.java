@@ -1,10 +1,9 @@
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
 
 public class Transform {
 
-    public static double[][] RotateCoords(double theta,double[][] coords){
+    public static double[][] RotateCoords(double theta,double[][] coordinates){
+        double[][] coords = coordinates.clone();
         for (double[] i: coords){
             double x = i[0];
             double y = i[1];
@@ -15,7 +14,8 @@ public class Transform {
         return coords;
     }
 
-    public static double[][] TranslateCoords(double deltaX, double deltaY, double[][] coords){
+    public static double[][] TranslateCoords(double deltaX, double deltaY, double[][] coordinates){
+        double[][] coords = coordinates.clone();
         for (double[] i: coords){
             i[0] += deltaX;
             i[1] += deltaY;
@@ -64,12 +64,12 @@ public class Transform {
                     }
                 } else if (next[1] > 0) {
                     double[] temp = new double[2];
-                    if (prev[0] == coords[i][0]) {
+                    if (next[0] == coords[i][0]) {
                         temp[0] = coords[i][0];
                         temp[1] = 0;
                         list.add(temp);
                     } else {
-                        double m = Properties.slope(coords[i], prev);
+                        double m = Properties.slope(coords[i], next);
                         temp[1] = 0;
                         temp[0] = coords[i][0] - coords[i][1] / m;
                         list.add(temp);
