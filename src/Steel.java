@@ -1,5 +1,5 @@
-public class Reinforcement extends ColumnGeometry {
-    Reinforcement(){
+public class Steel extends ColumnGeometry {
+    Steel(){
         super.setE(29000);//default E to 29000ksi
     }
     double[] rebarArea;

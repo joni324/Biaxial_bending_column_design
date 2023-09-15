@@ -1,4 +1,9 @@
-public class ColumnProperties {
+public class ColumnProperties implements Cloneable{
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
+
     private double E = 0;//ksi
     private double area = 0;//in^2
     private double xc = 0;//in

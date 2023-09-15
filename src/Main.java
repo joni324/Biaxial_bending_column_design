@@ -7,16 +7,24 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        Concrete concrete = new Concrete();
-        double[][] coords = {{0,0},{1,-1},{2,0},{1,1},{0,0}};
-        concrete.setCoordinates(coords);
-        concrete.updateProperties();
-        System.out.println(concrete.getArea());
-        concrete.Translate(-1,0);
-        concrete.Rotate(Math.PI/4);
-        printC(concrete.getCoordinates());
-        concrete.ReduceSection();
-        printC(concrete.getCoordinates());
-        System.out.println(concrete.getArea());
+        try {
+            Concrete conc = new Concrete();
+            conc.setCoordinates(new double[][] {{0,0},{0,-1},{1,-1},{1,0},{0,0}});
+            conc.updateProperties();
+            Composite c1 = new Composite();
+            c1.setConcrete(conc);
+            c1.UpdateProperties();;
+            Composite c2;
+            c2 =(Composite) c1.clone();
+            //c1.setArea(3);
+            c1.getConcrete().setCoordinates(new double[][] {{0,4},{0,-1},{1,-1},{1,0},{0,4}});
+            conc.updateProperties();
+            c1.getConcrete().updateProperties();
+            c1.UpdateProperties();
+            c2.UpdateProperties();
+            System.out.println(c2.getArea());
+        }catch (Exception e){
+        }
+
     }
 }
