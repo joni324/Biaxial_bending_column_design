@@ -1,4 +1,4 @@
-public class Properties {
+public class GeometricProperties {
     public static double E(double fc){
         return 120000*Math.pow(.145,2)*Math.pow(fc,.33);
     }
@@ -80,4 +80,12 @@ public class Properties {
         }
     }
 
+    public static double angleBetweenVectors(double[] v1, double[] v2){
+        double dotProduct = v1[0]*v2[0] + v1[1]*v2[1];
+        double v1Mag = Math.pow(v1[0]*v1[0] + v1[1]*v1[1], .5);
+        double v2Mag = Math.pow(v2[0]*v2[0] + v2[1]*v2[1], .5);
+
+        double angle = Math.acos(dotProduct/(v1Mag*v2Mag));
+        return angle;
+    }
 }

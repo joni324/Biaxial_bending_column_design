@@ -7,7 +7,7 @@ public class Steel extends ColumnGeometry {
         rebarArea = rebar;
     }
     public void updateProperties(){
-        double[] properties = Properties.steelProperties(this.getCoordinates(),this.rebarArea);
+        double[] properties = GeometricProperties.steelProperties(this.getCoordinates(),this.rebarArea);
         this.setArea(properties[0]);
         this.setXc(properties[1]);
         this.setYc(properties[2]);

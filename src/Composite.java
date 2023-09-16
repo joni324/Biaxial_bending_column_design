@@ -14,25 +14,32 @@ public class Composite extends ColumnProperties {
 
     public void setConcrete(Concrete concrete){
         this.concrete = concrete;
-        nu = steel.getE()/concrete.getE();
+        nu = 29000/concrete.getE();
         this.setE(concrete.getE());
     }
     public void setSteel(Steel steel){
         this.steel = steel;
     }
 
-    public void UpdateProperties(){
-        this.setArea(concrete.getArea()+nu* steel.getArea());
+    public void updateProperties(){
+        concrete.updateProperties();
+        steel.updateProperties();
+        this.setArea(concrete.getArea()+nu*steel.getArea());
         this.setXc((concrete.getXc()*concrete.getArea()+nu* steel.getXc()* steel.getArea())/this.getArea());
         this.setYc((concrete.getYc()*concrete.getArea()+nu* steel.getYc()* steel.getArea())/this.getArea());
         this.setIxx(concrete.getIxx()+nu* steel.getIxx());
         this.setIyy(concrete.getIyy()+nu* steel.getIyy());
     }
 
-    public void Rotate(double angle) {
-        concrete.Rotate(angle);
-        steel.Rotate(angle);
+    public void rotate(double angle) {
+        concrete.rotate(angle);
+        steel.rotate(angle);
     }
+    public void translate(double deltaX, double deltaY) {
+        concrete.translate(deltaX,deltaY);
+        steel.translate(deltaX,deltaY);
+    }
+
 
     public Concrete getConcrete(){
         return concrete;

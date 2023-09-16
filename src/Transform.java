@@ -36,7 +36,7 @@ public class Transform {
                         left[0] = coords[1][0];
                         left[1] = 0;
                     } else {
-                        double m = Properties.slope(coords[i], prev);
+                        double m = GeometricProperties.slope(coords[i], prev);
                         left[1] = 0;
                         left[0] = coords[i][0] - coords[i][1] / m;
                     }
@@ -44,7 +44,7 @@ public class Transform {
                         right[0] = coords[1][0];
                         right[1] = 0;
                     } else {
-                        double m = Properties.slope(coords[i], next);
+                        double m = GeometricProperties.slope(coords[i], next);
                         right[1] = 0;
                         right[0] = coords[i][0] - coords[i][1] / m;
                         list.add(left);
@@ -57,7 +57,7 @@ public class Transform {
                         temp[1] = 0;
                         list.add(temp);
                     } else {
-                        double m = Properties.slope(coords[i], prev);
+                        double m = GeometricProperties.slope(coords[i], prev);
                         temp[1] = 0;
                         temp[0] = coords[i][0] - coords[i][1] / m;
                         list.add(temp);
@@ -69,7 +69,7 @@ public class Transform {
                         temp[1] = 0;
                         list.add(temp);
                     } else {
-                        double m = Properties.slope(coords[i], next);
+                        double m = GeometricProperties.slope(coords[i], next);
                         temp[1] = 0;
                         temp[0] = coords[i][0] - coords[i][1] / m;
                         list.add(temp);
@@ -90,5 +90,46 @@ public class Transform {
         }
         list.add(list.get(0));
         return list.toArray(new double[0][0]);
+    }
+
+    public static void findNeutralAxis(Composite column, Load load){
+        double allowError = .01;
+        double error =1;
+
+        double E = column.getE();
+        double Area = column.getArea();
+
+        load.translate(-column.getXc(),-column.getYc());
+        column.translate(-column.getXc(), -column.getYc());
+
+        double phi = 0;
+
+        while (error > allowError){
+            double[] M = load.getM().clone();
+            double[] P = load.getP().clone();
+            M[0] += P[1]*P[2];
+            M[1] -= P[0]*P[2];
+
+            column.updateProperties();
+            double Ixx = column.getIxx();
+            double Ixy = column.getIxy();
+            phi = (M[0])/(E*Ixx); //phi = strain/in
+            double[] Mint = {phi*E*Ixx,phi*E*Ixy};//Internal moment in column
+            double angle = GeometricProperties.angleBetweenVectors(M, Mint);
+            if (Mint[1] > M[1]){
+                column.rotate(angle/2);
+                load.rotate(angle/2);
+            }else{
+                column.rotate(-angle/2);
+                load.rotate(-angle/2);
+            }
+            System.out.println("P = " + P[0] +" " + P[1] + " " + P[2]);
+            error = Math.abs(Mint[1] - M[1]);
+        }
+
+        //Apply Axial Load
+        double shift = (load.getP()[2]/(Area*E))/phi;
+        load.translate(0,shift);
+        column.translate(0,shift);
     }
 }

@@ -43,6 +43,14 @@ public class ColumnProperties implements Cloneable{
     public double getIyy(){
         return Iyy;
     }
+    public void setIxy(double Ixy){
+        this.Ixy = Ixy;
+    }
+
+    public double getIxy() {
+        return Ixy;
+    }
+
     public void setE(double E){
         this.E = E;
     }

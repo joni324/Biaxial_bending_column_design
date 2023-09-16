@@ -8,10 +8,10 @@ public class ColumnGeometry extends ColumnProperties{
     public double[][] getCoordinates() {
         return coordinates;
     }
-    public void Rotate(double angle){
+    public void rotate(double angle){
         this.setCoordinates(Transform.RotateCoords(angle, this.getCoordinates()));
     }
-    public void Translate(double deltaX, double deltaY){
+    public void translate(double deltaX, double deltaY){
         this.setCoordinates(Transform.TranslateCoords(deltaX, deltaY, this.getCoordinates()));
     }
 }
